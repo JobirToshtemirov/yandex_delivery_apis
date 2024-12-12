@@ -25,6 +25,9 @@ class BasketItemModel(models.Model):
 
 
 class BasketModel(BaseModel):
+    """
+    Basket Model. This model is used to store the items added to the basket by the user.
+    """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
