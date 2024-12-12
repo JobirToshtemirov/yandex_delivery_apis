@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from app_courier.models import CourierModel
+
+
+admin.site.register(CourierModel)

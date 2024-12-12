@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from app_users.models import UserLocations, UserModel
+
+admin.site.register(UserLocations)
+admin.site.register(UserModel)

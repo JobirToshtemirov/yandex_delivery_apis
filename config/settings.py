@@ -33,12 +33,19 @@ INSTALLED_APPS = [
     # jwt auth
     'rest_framework_simplejwt',
 
+    # Swagger
+    'drf_yasg',
+
     # my apps
-    'app_users',
+    'app_basket',
+    'app_branch',
     'app_common',
     'app_company',
-    'app_products',
+    'app_courier',
     'app_deliveries',
+    'app_products',
+    'app_users',
+    'app_admin',
 ]
 
 MIDDLEWARE = [
@@ -104,15 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-LANGUAGES = [
-    ('en', 'English'),
-    ('uz', 'Uzbek'),
-    ('ru', 'Russian'),
-]
-
-LOCALE_PATHS = (
-    BASE_DIR / 'locale',
-)
 
 TIME_ZONE = 'Asia/Tashkent'
 
@@ -150,7 +148,7 @@ REST_FRAMEWORK = {
     ],
 
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
+       'rest_framework.permissions.AllowAny',
     ],
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
