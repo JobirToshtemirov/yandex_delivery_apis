@@ -4,8 +4,8 @@ from .views import ManagerViewSet, CourierViewSet
 
 router = DefaultRouter()
 router.register('managers', ManagerViewSet)
-router.register('couriers', CourierViewSet)
+router.register('couriers', CourierViewSet, basename="co")
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
 ]

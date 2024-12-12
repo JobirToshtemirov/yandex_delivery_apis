@@ -12,17 +12,14 @@ from drf_yasg import openapi
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('api/', include('app_common.urls')),
-    path('superadmin/', include('app_admin.urls'))
-=======
+    # path('api/', include('app_common.urls')),
+    path('superadmin/', include('app_admin.urls')),
     path('api/user/', include('app_users.urls')),
     # path('api/order/', include('app_order.urls')),
     # path('api/product/', include('app_products.urls')),
     # path('api/restaurant/', include('app_restaurant.urls')),
     # path('api/delivery/', include('app_deliveries.urls')),
     path('api/courier/', include('app_courier.urls')),
->>>>>>> c62105a70d6435747814b9af2342d89a0e0a28f3
 ]
 
 # JWT Authentication
