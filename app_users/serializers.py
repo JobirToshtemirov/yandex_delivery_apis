@@ -76,6 +76,38 @@ class ProductModelSerializer(serializers.ModelSerializer):
     """
     Serializer for ProductModel.
     """
+
     class Meta:
         model = UserModel
         fields = ['id', 'first_name', 'last_name', 'phone_number']
+
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for updating password. It includes the fields for old_password, new_password, and confirm_password.
+    """
+    old_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True)
+
+    def validate_password(self, value):
+        """
+       Validate password.
+       """
+        if len(value) < 8:
+            raise serializers.ValidationError('Password must be at least 8 characters long.')
+        elif not any(char.isdigit() for char in value):
+            raise serializers.ValidationError('Password must contain at least one digit.')
+        elif not any(char.isalpha() for char in value):
+            raise serializers.ValidationError('Password must contain at least one letter.')
+        return value
+
+    def validate(self, data):
+        """
+        Validate old_password and confirm_password.
+        """
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError({'confirm_password': 'Passwords do not match.'})
+        elif not self.instance.check_password(data['old_password']):
+            raise serializers.ValidationError({'old_password': 'Old password is incorrect.'})
+        return data

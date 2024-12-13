@@ -24,6 +24,8 @@ class BasketView(View):
         return Response(response, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
+        baskets = BasketModel.objects.get(user=request.user)
+        print(baskets)
         serializer = self.serializer_class(data=request.data, user=request.user)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -52,3 +54,9 @@ class BasketView(View):
             'message': 'Basket deleted successfully',
         }
         return Response(response, status=status.HTTP_204_NO_CONTENT)
+
+
+class ChangeBasketStatusView(View):
+    queryset = BasketModel.objects.all()
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+

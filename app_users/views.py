@@ -6,20 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from app_products.models import ProductsModel
 from .models import UserModel
-from .serializers import UserModelSerializer, LoginSerializer, ProductModelSerializer
-
-
-class UserListView(viewsets.ModelViewSet):
-    """
-        API endpoint that allows users to be viewed or edited. This api for super admin only.
-    """
-    serializer_class = UserModelSerializer
-    queryset = UserModel.objects.all()
-    # permission_classes = [IsAdminUser]
-    pagination_class = CustomPagination
-
-    def perform_create(self, serializer):
-        serializer.save()
+from .serializers import UserModelSerializer, LoginSerializer, ProductModelSerializer, UpdatePasswordSerializer
 
 
 class LoginView(APIView):
@@ -80,3 +67,49 @@ class GetAllProductsView(APIView):
         products = ProductsModel.objects.all()
         serializer = ProductModelSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class UpdateUserView(APIView):
+    serializer_class = UserModelSerializer
+    queryset = UserModel.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        user = UserModel.objects.get(id=request.user.id)
+        serializer = UserModelSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'success': True,
+            'message': 'User updated successfully',
+            'data': serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+    def patch(self, request, *args, **kwargs):
+        user = UserModel.objects.get(id=request.user.id)
+        serializer = UserModelSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'success': True,
+            'message': 'User updated successfully',
+            'data': serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
+
+
+class UpdatePasswordView(APIView):
+    serializer_class = UpdatePasswordSerializer
+    queryset = UserModel.objects.all()
+
+    def put(self, request, *args, **kwargs):
+        user = UserModel.objects.get(id=request.user.id)
+        serializer = UpdatePasswordSerializer(user, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'success': True,
+            'message': 'Password updated successfully',
+            'data': serializer.data
+        }
+        return Response(response, status=status.HTTP_200_OK)
