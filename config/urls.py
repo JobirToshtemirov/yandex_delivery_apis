@@ -12,13 +12,13 @@ from drf_yasg import openapi
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/', include('app_common.urls')),
-    path('superadmin/', include('app_admin.urls')),
+    path('api/superadmin/', include('app_admin.urls')),
     path('api/user/', include('app_users.urls')),
     path('api/basket/', include('app_basket.urls')),
     # path('api/order/', include('app_order.urls')),
     # path('api/product/', include('app_products.urls')),
     # path('api/restaurant/', include('app_restaurant.urls')),
-    # path('api/delivery/', include('app_deliveries.urls')),
+    path('api/branch/', include('app_branch.urls')),
     path('api/courier/', include('app_courier.urls')),
 ]
 
@@ -30,19 +30,16 @@ urlpatterns += [
 
 # Swagger
 schema_view = get_schema_view(
-    openapi.Info(
-        title="Snippets API",
-        default_version='v1',
-        description="This is a sample server.  You can find out more about Swagger at "
-                    "[http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/). "
-                    "For this sample, you can use the api key `special-key` to test the authorization filters.",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="alamovasad@gmail.com", url="https://alamovasadbek.vercel.app/",
-                                name="Alamov Asadbek"),
-        license=openapi.License(name="BSD License"),
-    ),
-    public=True,
-    permission_classes=(permissions.AllowAny,),
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns += [
