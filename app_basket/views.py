@@ -17,13 +17,21 @@ class BasketView(APIView):
     pagination_class = CustomPagination
 
     def get(self, request, *args, **kwargs):
-        basket = self.queryset.filter(user=request.user)
-        serializer = self.serializer_class(basket, many=True)
-        response = {
-            'success': True,
-            'data': serializer.data,
-        }
-        return Response(response, status=status.HTTP_200_OK)
+        try:
+            basket = self.queryset.filter(user=request.user)
+            serializer = self.serializer_class(basket, many=True)
+            response = {
+                'success': True,
+                'data': serializer.data,
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            response = {
+                'success': False,
+                'message': 'Something went wrong',
+            }
+            return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         baskets = BasketModel.objects.get(user=request.user)
@@ -61,4 +69,3 @@ class BasketView(APIView):
 class ChangeBasketStatusView(View):
     queryset = BasketModel.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-
