@@ -5,14 +5,15 @@ from rest_framework import status
 from rest_framework.views import APIView
 
 from app_common.premissions import IsOwnerOrReadOnly
+from app_deliveries.models import OrderModel
 from .serializers import BasketSerializer
-from .models import BasketModel
+from .models import BasketModel, BasketItemModel
 from app_common.pagination import CustomPagination
 
 
 class BasketView(APIView):
     serializer_class = BasketSerializer
-    queryset = BasketModel.objects.all()
+    queryset = BasketItemModel.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
     pagination_class = CustomPagination
 
@@ -61,4 +62,16 @@ class BasketView(APIView):
 class ChangeBasketStatusView(View):
     queryset = BasketModel.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
+    serializer_class = BasketSerializer
 
+    def put(self, request, *args, **kwargs):
+        basket_products = self.queryset.get(user=request.user)
+        if not basket_products:
+            return Response({'success': False, 'message': 'Basket is empty'}, status=status.HTTP_400_BAD_REQUEST)
+        OrderModel.objects.create(user=request.user, product=basket_products)
+        basket_products.delete()
+        response = {
+            'success': True,
+            'data': 'Order created successfully'
+        }
+        return Response(response, status=status.HTTP_200_OK)
