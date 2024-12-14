@@ -57,7 +57,7 @@ class AcceptOrders(APIView):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AddOrRemove(APIView):
+class AddOrRemoveBranchProducts(APIView):
     """
     Add or remove products from the branch's order list.
     """
