@@ -2,23 +2,21 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework import permissions
-
-from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework import permissions
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('api/', include('app_common.urls')),
-    path('superadmin/', include('app_admin.urls')),
+    path('api/superadmin/', include('app_admin.urls')),
     path('api/user/', include('app_users.urls')),
     path('api/basket/', include('app_basket.urls')),
     # path('api/order/', include('app_order.urls')),
     # path('api/product/', include('app_products.urls')),
     # path('api/restaurant/', include('app_restaurant.urls')),
-    # path('api/delivery/', include('app_deliveries.urls')),
+    path('api/branch/', include('app_branch.urls')),
     path('api/courier/', include('app_courier.urls')),
 ]
 

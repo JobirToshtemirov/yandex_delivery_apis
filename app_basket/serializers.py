@@ -1,10 +1,10 @@
-from .models import BasketModel
+from .models import BasketModel, BasketItemModel
 from rest_framework import serializers
 
 
 class BasketSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BasketModel
+        model = BasketItemModel
         fields = '__all__'
 
     def validate(self, data):
@@ -21,3 +21,7 @@ class BasketSerializer(serializers.ModelSerializer):
         elif data['user'] == self.context['request'].user:
             raise serializers.ValidationError("User should not be the same as the current user")
         return data
+
+
+class ChangeBasketStatusSerializer(serializers.Serializer):
+    status = serializers.ChoiceField(choices=BasketModel.STATUS_CHOICES)
