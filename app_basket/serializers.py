@@ -21,7 +21,3 @@ class BasketSerializer(serializers.ModelSerializer):
         elif data['user'] == self.context['request'].user:
             raise serializers.ValidationError("User should not be the same as the current user")
         return data
-
-
-# class ChangeBasketStatusSerializer(serializers.Serializer):
-#     status = serializers.ChoiceField(choices=BasketModel.STATUS_CHOICES)
