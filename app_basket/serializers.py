@@ -23,5 +23,5 @@ class BasketSerializer(serializers.ModelSerializer):
         return data
 
 
-class ChangeBasketStatusSerializer(serializers.Serializer):
-    status = serializers.ChoiceField(choices=BasketModel.STATUS_CHOICES)
+# class ChangeBasketStatusSerializer(serializers.Serializer):
+#     status = serializers.ChoiceField(choices=BasketModel.STATUS_CHOICES)
