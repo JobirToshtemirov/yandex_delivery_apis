@@ -15,7 +15,7 @@ urlpatterns = [
     path('api/basket/', include('app_basket.urls')),
     # path('api/order/', include('app_order.urls')),
     # path('api/product/', include('app_products.urls')),
-    # path('api/restaurant/', include('app_restaurant.urls')),
+    path('api/restaurant/', include('app_company.urls')),
     path('api/branch/', include('app_branch.urls')),
     path('api/courier/', include('app_courier.urls')),
 ]
