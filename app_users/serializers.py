@@ -68,8 +68,16 @@ class LoginSerializer(serializers.Serializer):
     """
     Serializer for login. It includes the fields for phone_number and password.
     """
-    phone_number = serializers.CharField(write_only=True)
-    password = serializers.CharField(write_only=True)
+    phone_number = serializers.CharField(write_only=True, max_length=15)
+    password = serializers.CharField(write_only=True, max_length=64)
+
+
+class LoginWithUsernameSerializer(serializers.Serializer):
+    """
+    Serializer for login with username. It includes the fields for username and password.
+    """
+    username = serializers.CharField(write_only=True, max_length=64)
+    password = serializers.CharField(write_only=True, max_length=64)
 
 
 class ProductModelSerializer(serializers.ModelSerializer):
